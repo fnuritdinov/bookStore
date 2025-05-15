@@ -1,7 +1,7 @@
 package bookStore
 
 import (
-	"bookStore/cmd/internal/bookStore"
+	"bookStore/internal/bookStore"
 	"encoding/json"
 	"github.com/gofiber/fiber/v3"
 )
@@ -23,4 +23,15 @@ func (h *handler) AddBook(c fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(bk)
+}
+
+func (h *handler) GetBooks(c fiber.Ctx) error {
+	books, err := h.service.GetBooks()
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err,
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(books)
 }

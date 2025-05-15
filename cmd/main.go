@@ -2,7 +2,7 @@ package main
 
 import (
 	bookHandler "bookStore/cmd/handler/bookStore"
-	bookService "bookStore/cmd/internal/bookStore"
+	bookService "bookStore/internal/bookStore"
 	"github.com/gofiber/fiber/v3"
 )
 
@@ -14,6 +14,7 @@ func main() {
 	handler := bookHandler.New(service)
 
 	app.Post("/books", handler.AddBook)
+	app.Get("/books", handler.GetBooks)
 
 	app.Listen(":3000")
 }

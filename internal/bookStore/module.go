@@ -2,6 +2,7 @@ package bookStore
 
 type Service interface {
 	AddBook(book Book) (Book, error)
+	GetBooks() ([]Book, error)
 }
 
 type service struct {

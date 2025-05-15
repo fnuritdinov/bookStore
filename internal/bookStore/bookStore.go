@@ -1,6 +1,9 @@
 package bookStore
 
-import "time"
+import (
+	"errors"
+	"time"
+)
 
 type Book struct {
 	ID        int      `json:"id"`
@@ -34,4 +37,12 @@ func (s *service) AddBook(book Book) (Book, error) {
 	s.nextID++
 
 	return b, nil
+}
+
+func (s *service) GetBooks() ([]Book, error) {
+	if len(s.books) == 0 {
+		return nil, errors.New("no books found")
+	}
+
+	return s.books, nil
 }
