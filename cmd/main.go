@@ -16,12 +16,13 @@ func main() {
 	service := bookService.New()
 	handler := bookHandler.New(service)
 
-	app.Post("/books", handler.AddBook)
-	app.Get("/books", handler.GetBooks)
-
 	cfg := config.New("configs", "yml", "C:/Users/farrukh.nuritdinov/Desktop/bookStore/")
 	srv := configs.NewService(cfg)
 
+	baseApi := app.Group(fmt.Sprintf("/%s/%s", srv.Stage, srv.BaseURL))
+	baseApi.Post("/books", handler.AddBook)
+	baseApi.Get("/books", handler.GetBooks)
+
 	app.Listen(fmt.Sprintf(":%d", srv.Port))
-	
+
 }

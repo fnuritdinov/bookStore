@@ -7,6 +7,7 @@ import (
 
 type Config interface {
 	GetInt(key string) int
+	GetString(key string) string
 }
 
 type config struct {
@@ -27,4 +28,8 @@ func New(fileName, fileType, fileDir string) Config {
 
 func (c *config) GetInt(key string) int {
 	return c.v.GetInt(key)
+}
+
+func (c *config) GetString(key string) string {
+	return c.v.GetString(key)
 }
