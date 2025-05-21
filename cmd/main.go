@@ -2,7 +2,10 @@ package main
 
 import (
 	bookHandler "bookStore/cmd/handler/bookStore"
-	bookService "bookStore/cmd/internal/bookStore"
+	"bookStore/configs"
+	bookService "bookStore/internal/bookStore"
+	"bookStore/pkg/config"
+	"fmt"
 	"github.com/gofiber/fiber/v3"
 )
 
@@ -13,7 +16,13 @@ func main() {
 	service := bookService.New()
 	handler := bookHandler.New(service)
 
-	app.Post("/books", handler.AddBook)
+	cfg := config.New("configs", "yml", "C:/Users/farrukh.nuritdinov/Desktop/bookStore/")
+	srv := configs.NewService(cfg)
 
-	app.Listen(":3000")
+	baseApi := app.Group(fmt.Sprintf("/%s/%s", srv.Stage, srv.BaseURL))
+	baseApi.Post("/books", handler.AddBook)
+	baseApi.Get("/books", handler.GetBooks)
+
+	app.Listen(fmt.Sprintf(":%d", srv.Port))
+
 }

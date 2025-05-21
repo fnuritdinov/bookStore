@@ -1,12 +1,13 @@
 package bookStore
 
 import (
-	"bookStore/cmd/internal/bookStore"
+	"bookStore/internal/bookStore"
 	"github.com/gofiber/fiber/v3"
 )
 
 type Handler interface {
 	AddBook(c fiber.Ctx) error
+	GetBooks(c fiber.Ctx) error
 }
 
 type handler struct {
