@@ -8,6 +8,7 @@ import (
 type Config interface {
 	GetInt(key string) int
 	GetString(key string) string
+	GetBool(key string) bool
 }
 
 type config struct {
@@ -32,4 +33,8 @@ func (c *config) GetInt(key string) int {
 
 func (c *config) GetString(key string) string {
 	return c.v.GetString(key)
+}
+
+func (c *config) GetBool(key string) bool {
+	return c.v.GetBool(key)
 }
