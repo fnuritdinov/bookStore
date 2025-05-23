@@ -5,16 +5,20 @@ import (
 	"bookStore/configs"
 	bookService "bookStore/internal/bookStore"
 	"bookStore/pkg/config"
+	"bookStore/pkg/logger"
 	"fmt"
 	"github.com/gofiber/fiber/v3"
+	"strconv"
 )
 
 func main() {
 
 	app := fiber.New()
 
-	service := bookService.New()
-	handler := bookHandler.New(service)
+	l := logger.New("./app/app.log")
+
+	service := bookService.New(l)
+	handler := bookHandler.New(l, service)
 
 	cfg := config.New("configs", "yml", "C:/Users/farrukh.nuritdinov/Desktop/bookStore/")
 	srv := configs.NewService(cfg)
@@ -23,6 +27,9 @@ func main() {
 	baseApi.Post("/books", handler.AddBook)
 	baseApi.Get("/books", handler.GetBooks)
 
-	app.Listen(fmt.Sprintf(":%d", srv.Port))
-
+	l.Info("app started at " + srv.Stage + " port - " + strconv.Itoa(srv.Port))
+	err := app.Listen(fmt.Sprintf(":%d", srv.Port))
+	if err != nil {
+		l.Error("app.Listen: Error - " + err.Error())
+	}
 }
