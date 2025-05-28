@@ -30,6 +30,7 @@ func (h *handler) AddBook(c fiber.Ctx) error {
 func (h *handler) GetBooks(c fiber.Ctx) error {
 	books, err := h.service.GetBooks()
 	if err != nil {
+		h.logger.Error("service.GetBooks: Error - " + err.Error())
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err,
 		})

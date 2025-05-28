@@ -15,7 +15,7 @@ func main() {
 
 	app := fiber.New()
 
-	l := logger.New("./app/app.log")
+	l := logger.New("./app.log")
 
 	service := bookService.New(l)
 	handler := bookHandler.New(l, service)
@@ -28,6 +28,7 @@ func main() {
 	baseApi.Get("/books", handler.GetBooks)
 
 	l.Info("app started at " + srv.Stage + " port - " + strconv.Itoa(srv.Port))
+
 	err := app.Listen(fmt.Sprintf(":%d", srv.Port))
 	if err != nil {
 		l.Error("app.Listen: Error - " + err.Error())
