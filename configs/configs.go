@@ -1,6 +1,9 @@
 package configs
 
-import "bookStore/pkg/config"
+import (
+	"bookStore/pkg/config"
+	"fmt"
+)
 
 type Service struct {
 	Port    int
@@ -8,10 +11,28 @@ type Service struct {
 	Stage   string
 }
 
-func NewService(cfg config.Config) Service {
-	return Service{
-		Port:    cfg.GetInt("service.port"),
-		BaseURL: cfg.GetString("service.base_url"),
-		Stage:   cfg.GetString("service.stage"),
-	}
+func (s *Service) NewService(cfg config.Config) {
+	s.Port = cfg.GetInt("service.port")
+	s.BaseURL = cfg.GetString("service.base_url")
+	s.Stage = cfg.GetString("service.stage")
+}
+
+type DB struct {
+	Name     string
+	Schema   string
+	Port     int
+	User     string
+	Password string
+}
+
+func (db *DB) URL(cfg config.Config) string {
+	db.User = cfg.GetString("database.user")
+	db.Password = cfg.GetString("database.password")
+	db.Name = cfg.GetString("database.name")
+	db.Schema = cfg.GetString("database.schema")
+	db.Port = cfg.GetInt("database.port")
+
+	return fmt.Sprintf(
+		"postgres://%s:%s@localhost:%d/%s?sslmode=disable&search_path=%s",
+		db.User, db.Password, db.Port, db.Name, db.Schema)
 }

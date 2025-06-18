@@ -3,6 +3,14 @@ service:
   base_url: api/
   stage: dev
 
+database:
+  name: book_store_database
+  schema: book_store_schema
+  port: 5435
+  user: user
+  password: password
+
+
 
 
 

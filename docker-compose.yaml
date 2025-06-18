@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: book_store_postgres5
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=book_store_database
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # ✅ исправлено
+      - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - book_store1
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+
+networks:
+  book_store1:
+    driver: bridge
