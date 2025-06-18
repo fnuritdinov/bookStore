@@ -1,13 +1,13 @@
 package bookStore
 
 import (
-	"bookStore/internal/bookStore"
+	"bookStore/internal/domain"
 	"encoding/json"
 	"github.com/gofiber/fiber/v3"
 )
 
 func (h *handler) AddBook(c fiber.Ctx) error {
-	var b bookStore.Book
+	var b domain.Book
 
 	if err := json.Unmarshal(c.Body(), &b); err != nil {
 		h.logger.Error("json.Unmarshal: Error - " + err.Error())

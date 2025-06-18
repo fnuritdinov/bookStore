@@ -1,14 +1,15 @@
-package bookStore
+package repository
 
 import (
-	bookService "bookStore/internal/bookStore"
+	"bookStore/internal/domain"
 	"bookStore/pkg/db"
 	"bookStore/pkg/logger"
+	"context"
 )
 
 type Repository interface {
-	AddBook(book bookService.Book) (bookService.Book, error)
-	GetBooks() ([]bookService.Book, error)
+	AddBook(ctx context.Context, book domain.Book) (domain.Book, error)
+	GetBooks() ([]domain.Book, error)
 }
 
 type repository struct {

@@ -25,7 +25,13 @@ type DB struct {
 	Password string
 }
 
-func (db *DB) URL() string {
+func (db *DB) URL(cfg config.Config) string {
+	db.User = cfg.GetString("database.user")
+	db.Password = cfg.GetString("database.password")
+	db.Name = cfg.GetString("database.name")
+	db.Schema = cfg.GetString("database.schema")
+	db.Port = cfg.GetInt("database.port")
+
 	return fmt.Sprintf(
 		"postgres://%s:%s@localhost:%d/%s?sslmode=disable&search_path=%s",
 		db.User, db.Password, db.Port, db.Name, db.Schema)

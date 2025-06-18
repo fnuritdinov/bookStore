@@ -6,6 +6,7 @@ import (
 	bookService "bookStore/internal/bookStore"
 	"bookStore/pkg/config"
 	"bookStore/pkg/logger"
+	"context"
 	"fmt"
 	"github.com/gofiber/fiber/v3"
 	"strconv"
@@ -16,11 +17,14 @@ func main() {
 	app := fiber.New()
 
 	l := logger.New("./app.log")
+	cfg := config.New("configs", "yml", "D:/farukh/bookStore")
 
-	service := bookService.New(l)
+	var db configs.DB
+
+	dbURL := db.URL(cfg)
+	service := bookService.New(context.Background(), l, dbURL)
 	handler := bookHandler.New(l, service)
 
-	cfg := config.New("configs", "yml", "C:/Users/farrukh.nuritdinov/Desktop/bookStore/")
 	var srv = configs.Service{}
 	srv.NewService(cfg)
 

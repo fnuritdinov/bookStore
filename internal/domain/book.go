@@ -1,9 +1,4 @@
-package bookStore
-
-import (
-	bookService "bookStore/internal/bookStore"
-	"errors"
-)
+package domain
 
 type Book struct {
 	ID        int      `json:"id"`
@@ -16,12 +11,4 @@ type Book struct {
 	CreatedAt string   `json:"created_at"`
 	UpdatedAt string   `json:"updated_at"`
 	DeletedAt string   `json:"deleted_at"`
-}
-
-func (r *repository) AddBook(book bookService.Book) (bookService.Book, error) {
-	return bookService.Book{}, errors.New("Not Implemented")
-}
-
-func (r *repository) GetBooks() ([]bookService.Book, error) {
-	return nil, errors.New("Not Implemented")
 }
