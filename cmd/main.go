@@ -21,7 +21,8 @@ func main() {
 	handler := bookHandler.New(l, service)
 
 	cfg := config.New("configs", "yml", "C:/Users/farrukh.nuritdinov/Desktop/bookStore/")
-	srv := configs.NewService(cfg)
+	var srv = configs.Service{}
+	srv.NewService(cfg)
 
 	baseApi := app.Group(fmt.Sprintf("/%s/%s", srv.Stage, srv.BaseURL))
 	baseApi.Post("/books", handler.AddBook)
