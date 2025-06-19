@@ -17,7 +17,7 @@ func main() {
 	app := fiber.New()
 
 	l := logger.New("./app.log")
-	cfg := config.New("configs", "yml", "D:/farukh/bookStore")
+	cfg := config.New("configs", "yml", "C:/Users/farrukh.nuritdinov/Desktop/bookStore")
 
 	var db configs.DB
 
